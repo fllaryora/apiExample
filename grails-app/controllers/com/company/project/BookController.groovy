@@ -89,14 +89,15 @@ class BookController {
 			render 'Can\'t find the book id = '+id
 			return
 		}
+		
+		String filter = URLDecoder.decode("%00", "UTF-8")
 		if( params.isbn != null){
-			System.out.println("isbn es "+ params.isbn)
-			String filter = URLEncoder.encode(params.isbn.toString(), "UTF-8") 
-			
-			System.out.println("isbn tiene "+ params.isbn.length())
-			System.out.println("filter es "+ filter)
-			System.out.println("filter tiene "+ filter.length())
+			params.isbn = params.isbn.toString().replaceAll(filter, "") 
 		}
+		if( params.title != null){
+			params.title = params.title.toString().replaceAll(filter, "")
+		}
+		
 		book.properties = params
 		
 		try{
